@@ -29,6 +29,13 @@ export async function obtenerClientes(senal) {
   return datos.items;
 }
 
+// Obtiene la lista de clientes para la pantalla de consulta.
+export async function listarClientes(senal) {
+  const parametros = new URLSearchParams({ sort: 'nombre', perPage: '100' });
+  const datos = await obtenerJson(`${URL_COLECCIONES}/clientes/records?${parametros}`, senal);
+  return datos.items;
+}
+
 // Registra un cliente nuevo en PocketBase.
 export async function crearCliente(datosCliente) {
   return enviarJson(`${URL_COLECCIONES}/clientes/records`, datosCliente);

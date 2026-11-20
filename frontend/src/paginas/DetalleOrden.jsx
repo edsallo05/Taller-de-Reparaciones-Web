@@ -107,7 +107,11 @@ function DetalleOrden() {
     const cantidad = Number(piezaNueva.cantidad);
     const precio = Number(piezaNueva.precio);
 
-    if (!piezaNueva.descripcion.trim() || cantidad <= 0 || precio < 0) {
+    const descripcion = piezaNueva.descripcion.trim();
+
+    if (descripcion.length < 2 || descripcion.length > 100 || !/[A-Za-zÀ-ÖØ-öø-ÿ]/.test(descripcion)
+      || !Number.isFinite(cantidad) || cantidad <= 0 || cantidad > 10000
+      || !Number.isFinite(precio) || precio < 0 || precio > 100000000) {
       setError('Completa la descripción y usa una cantidad y un precio válidos.');
       return;
     }
@@ -115,7 +119,7 @@ function DetalleOrden() {
     setDatosPresupuesto((datosAnteriores) => ({
       ...datosAnteriores,
       piezas: [...datosAnteriores.piezas, {
-        descripcion: piezaNueva.descripcion.trim(),
+        descripcion,
         cantidad,
         precio,
       }],
@@ -127,10 +131,23 @@ function DetalleOrden() {
   // Registra el diagnóstico y el presupuesto antes de avanzar de etapa.
   function manejarEnvioPresupuesto(evento) {
     evento.preventDefault();
+    const diagnostico = datosPresupuesto.diagnostico.trim();
+    const manoObra = Number(datosPresupuesto.manoObra);
+
+    if (diagnostico.length < 10 || diagnostico.length > 1000 || !/[A-Za-zÀ-ÖØ-öø-ÿ]/.test(diagnostico)) {
+      setError('Escribe un diagnóstico descriptivo de al menos diez caracteres.');
+      return;
+    }
+
+    if (!Number.isFinite(manoObra) || manoObra < 0 || manoObra > 100000000) {
+      setError('La mano de obra debe ser un importe válido entre cero y 100 000 000.');
+      return;
+    }
+
     guardarCambios({
       estado: 'presupuestada',
-      diagnostico: datosPresupuesto.diagnostico,
-      manoObra: Number(datosPresupuesto.manoObra),
+      diagnostico,
+      manoObra,
       piezas: datosPresupuesto.piezas,
     }, 'El presupuesto quedó registrado.');
   }
@@ -232,8 +249,11 @@ function DetalleOrden() {
               Diagnóstico
               <textarea
                 onChange={(evento) => setDatosPresupuesto((datosAnteriores) => ({ ...datosAnteriores, diagnostico: evento.target.value }))}
+                maxLength={1000}
+                minLength={10}
                 required
                 rows="3"
+                title="Describe el diagnóstico con al menos diez caracteres."
                 value={datosPresupuesto.diagnostico}
               />
             </label>
@@ -241,6 +261,7 @@ function DetalleOrden() {
               Mano de obra
               <input
                 min="0"
+                max="100000000"
                 onChange={(evento) => setDatosPresupuesto((datosAnteriores) => ({ ...datosAnteriores, manoObra: evento.target.value }))}
                 required
                 step="0.01"
@@ -270,7 +291,10 @@ function DetalleOrden() {
                 <label>
                   Descripción
                   <input
+                    maxLength={100}
+                    minLength={2}
                     onChange={(evento) => setPiezaNueva((piezaAnterior) => ({ ...piezaAnterior, descripcion: evento.target.value }))}
+                    required
                     value={piezaNueva.descripcion}
                   />
                 </label>
@@ -278,6 +302,8 @@ function DetalleOrden() {
                   Cantidad
                   <input
                     min="0.01"
+                    max="10000"
+                    required
                     onChange={(evento) => setPiezaNueva((piezaAnterior) => ({ ...piezaAnterior, cantidad: evento.target.value }))}
                     step="0.01"
                     type="number"
@@ -288,6 +314,8 @@ function DetalleOrden() {
                   Precio
                   <input
                     min="0"
+                    max="100000000"
+                    required
                     onChange={(evento) => setPiezaNueva((piezaAnterior) => ({ ...piezaAnterior, precio: evento.target.value }))}
                     step="0.01"
                     type="number"

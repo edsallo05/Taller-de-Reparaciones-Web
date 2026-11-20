@@ -62,6 +62,7 @@ El total del presupuesto se calcula en la interfaz sumando la mano de obra y el 
 ## Rutas principales
 
 - `/`: listado de órdenes y recuentos por etapa.
+- `/clientes`: directorio de clientes registrados.
 - `/ordenes/nueva`: recepción de un equipo y hasta tres fotos.
 - `/ordenes/:ordenId`: información, presupuesto, acciones permitidas e historial de una orden.
 - `/clientes/nuevo`: registro de un cliente.
@@ -72,6 +73,8 @@ El total del presupuesto se calcula en la interfaz sumando la mano de obra y el 
 Las etapas válidas son `solicitada`, `en_diagnostico`, `presupuestada`, `aprobada`, `en_reparacion`, `lista` y `entregada`. También existen las salidas `rechazada` y `cancelada`.
 
 PocketBase impide saltar etapas, cancelar una orden después de iniciar el diagnóstico, cambiar órdenes cerradas, editar el presupuesto después de registrarlo y editar o borrar eventos. Cada cambio de etapa y su evento histórico se guardan dentro de una transacción. La colección limita las fotos a tres imágenes por orden.
+
+Los formularios también verifican los datos en el servidor: el nombre admite letras y separadores habituales, el teléfono requiere ocho cifras y las descripciones, diagnósticos e importes deben cumplir longitudes y rangos razonables. La lista de clientes permite consultar los contactos guardados. El selector de tema claro/oscuro conserva la preferencia en el navegador.
 
 ## Estructura
 

@@ -46,6 +46,14 @@ a {
   gap: 0.4rem;
 }
 
+.enlace-navegacion,
+.navegacion .boton-enlace,
+.boton-tema {
+  min-height: 2.65rem;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.9rem;
+}
+
 .marca {
   display: inline-flex;
   align-items: center;
@@ -63,6 +71,8 @@ a {
   border-radius: 0.6rem;
   background: #276448;
   color: #fff;
+  font-size: 1rem;
+  line-height: 1;
 }
 
 .enlace-navegacion {
@@ -483,6 +493,23 @@ a {
   justify-content: center;
 }
 
+.boton-tema {
+  display: inline-flex;
+  width: 2.65rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #cfd8d0;
+  border-radius: 0.55rem;
+  background: #fff;
+  color: #36423a;
+  cursor: pointer;
+  font-size: 1.15rem;
+}
+
+.boton-tema:hover {
+  background: #f4f6f3;
+}
+
 .formulario-pagina {
   max-width: 760px;
   margin: 0 auto;
@@ -570,6 +597,91 @@ a {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
+}
+
+html[data-tema='oscuro'] body {
+  background: #141a17;
+  color: #e8eee9;
+}
+
+html[data-tema='oscuro'] a {
+  color: #a8d9b7;
+}
+
+html[data-tema='oscuro'] .barra-superior,
+html[data-tema='oscuro'] .tarjeta,
+html[data-tema='oscuro'] .tarjeta-estado,
+html[data-tema='oscuro'] .resumen-ordenes,
+html[data-tema='oscuro'] .tabla-contenedor,
+html[data-tema='oscuro'] .mensaje-panel {
+  border-color: #344139;
+  background: #202923;
+  color: #d5ded7;
+}
+
+html[data-tema='oscuro'] .marca,
+html[data-tema='oscuro'] .resumen-numero,
+html[data-tema='oscuro'] .tarjeta-estado strong,
+html[data-tema='oscuro'] .fila-total,
+html[data-tema='oscuro'] .pieza-presupuesto {
+  color: #e8eee9;
+}
+
+html[data-tema='oscuro'] .texto-secundario,
+html[data-tema='oscuro'] .equipo-problema,
+html[data-tema='oscuro'] .lista-datos dt,
+html[data-tema='oscuro'] .tabla-ordenes th,
+html[data-tema='oscuro'] .lista-historial time {
+  color: #aab8ad;
+}
+
+html[data-tema='oscuro'] .enlace-navegacion.active,
+html[data-tema='oscuro'] .enlace-navegacion:hover {
+  background: #2b3d31;
+}
+
+html[data-tema='oscuro'] .tabla-ordenes th,
+html[data-tema='oscuro'] .tabla-ordenes td,
+html[data-tema='oscuro'] .pieza-presupuesto,
+html[data-tema='oscuro'] .lista-historial li,
+html[data-tema='oscuro'] .fila-total {
+  border-color: #344139;
+}
+
+html[data-tema='oscuro'] .formulario label {
+  color: #d5ded7;
+}
+
+html[data-tema='oscuro'] .formulario input,
+html[data-tema='oscuro'] .formulario select,
+html[data-tema='oscuro'] .formulario textarea {
+  border-color: #49574d;
+  background: #18201b;
+  color: #e8eee9;
+}
+
+html[data-tema='oscuro'] .boton-secundario,
+html[data-tema='oscuro'] .boton-tema {
+  border-color: #49574d;
+  background: #26332b;
+  color: #e8eee9;
+}
+
+html[data-tema='oscuro'] .boton-secundario:hover,
+html[data-tema='oscuro'] .boton-tema:hover {
+  background: #324237;
+}
+
+html[data-tema='oscuro'] .mensaje-error {
+  border-color: #704848;
+  background: #352323;
+  color: #f1bcbc;
+}
+
+html[data-tema='oscuro'] .mensaje-exito {
+  border-color: #3b6648;
+  background: #203429;
+  color: #b9e0c4;
 }
 
 @media (max-width: 700px) {

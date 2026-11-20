@@ -56,12 +56,12 @@ function ListaOrdenes() {
           <p className="etiqueta">Panel del taller</p>
           <h1>Órdenes de reparación</h1>
           <p className="texto-secundario">Consulta el estado actual de los equipos recibidos.</p>
+          <div className="resumen-ordenes">
+            <span className="resumen-numero">{ordenes.length}</span>
+            <span>órdenes registradas</span>
+          </div>
         </div>
         <Link className="boton-principal boton-enlace" to="/ordenes/nueva">Registrar orden</Link>
-        <div className="resumen-ordenes">
-          <span className="resumen-numero">{ordenes.length}</span>
-          <span>órdenes registradas</span>
-        </div>
       </div>
 
       <div className="rejilla-estados" aria-label="Cantidad de órdenes por estado">

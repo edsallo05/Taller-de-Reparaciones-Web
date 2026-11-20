@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate, useSearchParams } from 'react-router';
 import { crearOrden, obtenerClientes } from '../peticiones/ordenes.js';
 
 // Registra un equipo, su problema y hasta tres fotos.
 function FormularioOrden() {
   const navegar = useNavigate();
+  const [parametros] = useSearchParams();
   const [clientes, setClientes] = useState([]);
   const [datosOrden, setDatosOrden] = useState({
     cliente: '',
@@ -27,7 +28,9 @@ function FormularioOrden() {
         if (registros.length > 0) {
           setDatosOrden((datosAnteriores) => ({
             ...datosAnteriores,
-            cliente: registros[0].id,
+            cliente: registros.some((cliente) => cliente.id === parametros.get('cliente'))
+              ? parametros.get('cliente')
+              : registros[0].id,
           }));
         }
       } catch (errorCarga) {
@@ -68,11 +71,24 @@ function FormularioOrden() {
   // Guarda la orden y abre su página de detalle.
   async function manejarEnvio(evento) {
     evento.preventDefault();
+    const equipo = datosOrden.equipo.trim();
+    const problema = datosOrden.problema.trim();
+
+    if (equipo.length < 2 || !/[A-Za-zÀ-ÖØ-öø-ÿ]/.test(equipo)) {
+      setError('Escribe un tipo de equipo válido, como teléfono, laptop o televisor.');
+      return;
+    }
+
+    if (problema.length < 10 || !/[A-Za-zÀ-ÖØ-öø-ÿ]/.test(problema)) {
+      setError('Describe el problema con al menos diez caracteres y letras.');
+      return;
+    }
+
     setGuardando(true);
     setError('');
 
     try {
-      const orden = await crearOrden(datosOrden);
+      const orden = await crearOrden({ ...datosOrden, equipo, problema });
       navegar(`/ordenes/${orden.id}`);
     } catch (errorGuardado) {
       setError(errorGuardado.message);
@@ -121,9 +137,12 @@ function FormularioOrden() {
                 Equipo
                 <input
                   name="equipo"
+                  maxLength={80}
+                  minLength={2}
                   onChange={manejarCambio}
                   placeholder="Ej.: teléfono, laptop, televisor"
                   required
+                  title="Indica el tipo de equipo con al menos dos caracteres."
                   value={datosOrden.equipo}
                 />
               </label>
@@ -131,9 +150,12 @@ function FormularioOrden() {
                 Problema reportado
                 <textarea
                   name="problema"
+                  maxLength={500}
+                  minLength={10}
                   onChange={manejarCambio}
                   required
                   rows="4"
+                  title="Describe el problema con al menos diez caracteres."
                   value={datosOrden.problema}
                 />
               </label>

@@ -12,7 +12,8 @@ function FormularioCliente() {
   // Actualiza el campo que cambió en el formulario.
   function manejarCambio(evento) {
     const { name, value } = evento.target;
-    setDatosCliente((datosAnteriores) => ({ ...datosAnteriores, [name]: value }));
+    const valorValidado = name === 'telefono' ? value.replace(/\D/g, '').slice(0, 8) : value;
+    setDatosCliente((datosAnteriores) => ({ ...datosAnteriores, [name]: valorValidado }));
     setMensaje('');
   }
 
@@ -51,8 +52,13 @@ function FormularioCliente() {
           <input
             autoComplete="name"
             name="nombre"
+            maxLength={80}
+            minLength={2}
             onChange={manejarCambio}
+            pattern="[A-Za-zÀ-ÖØ-öø-ÿ]+([ '-][A-Za-zÀ-ÖØ-öø-ÿ]+)*"
+            placeholder="Ej.: Ana Pérez"
             required
+            title="Escribe un nombre con letras, espacios, guiones o apóstrofos; no uses números."
             value={datosCliente.nombre}
           />
         </label>
@@ -62,8 +68,14 @@ function FormularioCliente() {
             autoComplete="tel"
             name="telefono"
             onChange={manejarCambio}
+            inputMode="numeric"
+            maxLength={8}
+            minLength={8}
+            pattern="[0-9]{8}"
+            placeholder="Ej.: 51234567"
             required
             type="tel"
+            title="El teléfono debe contener exactamente ocho números."
             value={datosCliente.telefono}
           />
         </label>
