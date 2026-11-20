@@ -245,6 +245,10 @@ function DetalleOrden() {
 
         {presupuestoEditable && (
           <form className="formulario formulario-presupuesto" onSubmit={manejarEnvioPresupuesto}>
+            <p className="texto-secundario">
+              Completa el diagnóstico y el presupuesto. Al guardarlos, la orden pasará a Presupuestada.
+              Añade piezas solo si hacen falta para la reparación.
+            </p>
             <label>
               Diagnóstico
               <textarea
@@ -329,7 +333,7 @@ function DetalleOrden() {
               Total calculado: ${(Number(datosPresupuesto.manoObra || 0) + datosPresupuesto.piezas.reduce((total, pieza) => total + pieza.cantidad * pieza.precio, 0)).toFixed(2)}
             </p>
             <button className="boton-principal" disabled={guardando} type="submit">
-              {guardando ? 'Guardando…' : 'Registrar presupuesto'}
+              {guardando ? 'Guardando…' : 'Guardar y pasar a Presupuestada'}
             </button>
           </form>
         )}
