@@ -110,6 +110,7 @@ function DetalleOrden() {
     const descripcion = piezaNueva.descripcion.trim();
 
     if (descripcion.length < 2 || descripcion.length > 100 || !/[A-Za-zÀ-ÖØ-öø-ÿ]/.test(descripcion)
+      || piezaNueva.cantidad.trim() === '' || piezaNueva.precio.trim() === ''
       || !Number.isFinite(cantidad) || cantidad <= 0 || cantidad > 10000
       || !Number.isFinite(precio) || precio < 0 || precio > 100000000) {
       setError('Completa la descripción y usa una cantidad y un precio válidos.');
@@ -298,7 +299,6 @@ function DetalleOrden() {
                     maxLength={100}
                     minLength={2}
                     onChange={(evento) => setPiezaNueva((piezaAnterior) => ({ ...piezaAnterior, descripcion: evento.target.value }))}
-                    required
                     value={piezaNueva.descripcion}
                   />
                 </label>
@@ -307,7 +307,6 @@ function DetalleOrden() {
                   <input
                     min="0.01"
                     max="10000"
-                    required
                     onChange={(evento) => setPiezaNueva((piezaAnterior) => ({ ...piezaAnterior, cantidad: evento.target.value }))}
                     step="0.01"
                     type="number"
@@ -319,7 +318,6 @@ function DetalleOrden() {
                   <input
                     min="0"
                     max="100000000"
-                    required
                     onChange={(evento) => setPiezaNueva((piezaAnterior) => ({ ...piezaAnterior, precio: evento.target.value }))}
                     step="0.01"
                     type="number"
