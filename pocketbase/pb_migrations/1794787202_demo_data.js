@@ -6,12 +6,12 @@ migrate((app) => {
 
   const clienteAna = new Record(coleccionClientes);
   clienteAna.set('nombre', 'Ana Pérez');
-  clienteAna.set('telefono', '555-0101');
+  clienteAna.set('telefono', '55550101');
   app.save(clienteAna);
 
   const clienteLuis = new Record(coleccionClientes);
   clienteLuis.set('nombre', 'Luis Gómez');
-  clienteLuis.set('telefono', '555-0102');
+  clienteLuis.set('telefono', '55550102');
   app.save(clienteLuis);
 
   const ordenSolicitada = new Record(coleccionOrdenes);
