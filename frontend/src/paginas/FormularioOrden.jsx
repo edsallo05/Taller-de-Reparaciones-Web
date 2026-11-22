@@ -46,7 +46,7 @@ function FormularioOrden() {
 
     cargarClientes();
     return () => controlador.abort();
-  }, []);
+  }, [parametros]);
 
   // Actualiza un campo de texto o selección del formulario.
   function manejarCambio(evento) {
