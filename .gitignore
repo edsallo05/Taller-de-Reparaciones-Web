@@ -7,3 +7,5 @@ pocketbase/pocketbase.exe
 .env
 .env.*
 !.env.example
+AGENTS.md
+.docx
